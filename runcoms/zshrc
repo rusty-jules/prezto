@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 #
 # Executes commands at the start of an interactive session.
 #
@@ -11,3 +18,47 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+
+# Use Neovim as default editor
+export EDITOR=nvim
+
+# Zoxide Shell Initialization
+eval "$(zoxide init zsh)"
+
+# Bat settings
+export BAT_PAGER="less -R"
+
+# NVM settings
+export NVM_DIR=$HOME/.nvm
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && . "/opt/homebrew/opt/nvm/nvm.sh"
+
+# Aliases for listing
+alias -g la="exa -lhag --icons"
+alias -g ls="exa -G --icons"
+alias -g ll="exa -la --icons"
+
+# Aliases for brew
+alias -g brewx86="/usr/local/bin/brew"
+alias -g brewarm="/opt/homebrew/bin/brew"
+
+# Vi Editing Mode
+bindkey -v
+
+# Fzf Shell Commands
+# NOTE These must stay at the bottom of zshrc to load on login shell
+fd_options="--follow --exclude .git --exclude node_modules"
+export FZF_CTRL_T_COMMAND="fd $fd_options"
+export FZF_ALT_C_COMMAND="fd --type d $fd_options"
+export FZF_DEFAULT_COMMAND="git ls-files --cached --others --exclude-standard | fd --type f --type l $fd_options"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
+[[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
+
+#
+# Functions
+#
+openPorts() {
+    lsof -P -i TCP -s TCP:LISTEN
+}
