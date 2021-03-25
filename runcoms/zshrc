@@ -53,12 +53,23 @@ export FZF_DEFAULT_COMMAND="git ls-files --cached --others --exclude-standard | 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# Print current tab-rs tab
+function prompt_show_tab() {
+    if (($+TAB)); then
+        p10k segment -f green -t "${TAB%?}"
+    fi
+}
+
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
 [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
 
 #
 # Functions
 #
+
+# Print all bound ports
 openPorts() {
     lsof -P -i TCP -s TCP:LISTEN
 }
+
+
