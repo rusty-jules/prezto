@@ -41,6 +41,9 @@ alias -g ll="exa -la --icons"
 alias -g brewx86="/usr/local/bin/brew"
 alias -g brewarm="/opt/homebrew/bin/brew"
 
+# Aliases for deno
+alias -g denor="deno run --allow-net --allow-read --allow-write"
+
 # Vi Editing Mode
 bindkey -v
 
